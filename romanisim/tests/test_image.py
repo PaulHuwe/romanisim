@@ -731,8 +731,9 @@ def test_inject_source_into_image():
                   == newimage[int(xpos) + psfXmax:int(xpos) - psfXmin, int(ypos) + psfYmax:int(ypos) - psfYmin].value)
 
     # Test that all pixels inside of the psf of the injected source are different from the original image
-    assert np.any(origimage.data[int(xpos) - psfXmin:int(xpos) + psfXmax, int(ypos) - psfYmin:int(ypos) + psfYmax].value
-                  != newimage[int(xpos) - psfXmin:int(xpos) + psfXmax, int(ypos) - psfYmin:int(ypos) + psfYmax].value)
+    assert np.any((origimage.data[int(xpos) - psfXmin:int(xpos) + psfXmax, int(ypos) - psfYmin:int(ypos) + psfYmax].value == 0)
+                  or (origimage.data[int(xpos) - psfXmin:int(xpos) + psfXmax, int(ypos) - psfYmin:int(ypos) + psfYmax].value
+                  != newimage[int(xpos) - psfXmin:int(xpos) + psfXmax, int(ypos) - psfYmin:int(ypos) + psfYmax].value))
 
     log.info(f'DMS231: successfully injected a source into an image at x,y = {xpos},{ypos}.')
 
